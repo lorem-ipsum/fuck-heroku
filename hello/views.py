@@ -27,5 +27,6 @@ def write_server(request):
     data = json.loads(request.body)
     data['id'] = uuid.uuid4()
     Person.objects.create(**data)
-    return JsonResponse({'success': True})
+    # return JsonResponse({'success': True})
     # return HttpResponse("<h1>Hello!</h1>")
+    return render(request, "write.html")
