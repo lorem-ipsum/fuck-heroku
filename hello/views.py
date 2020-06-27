@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
-from .models import Greeting
+import uuid
+import json
+from .models import Greeting, Person
 
 # Create your views here.
+
+
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, "index.html")
@@ -17,3 +21,10 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, "db.html", {"greetings": greetings})
+
+
+def write_server(request):
+    data = json.loads(request.body)
+    data['id'] = uuid.uuid4()
+    Person.objects.create(**data)
+    return JsonResponse({'success': True})
